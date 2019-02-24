@@ -1,6 +1,11 @@
 # Personal Weather Station
 # Raspberry PI
-- set of scripts for temperature acquisition with DS18B20 temperature sensors
+## Set of scripts for temperature acquisition with DS18B20 temperature sensors.
+## For enable Wire-1 in RaspPI:
+add in # /etc/modules:
+
+w1-gpio pullup=1
+w1-therm
 
 ### Use lighttpd web server, rrdtool, perl and python for rrdtool:
 
