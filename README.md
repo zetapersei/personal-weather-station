@@ -2,7 +2,7 @@
 
 ## in Raspberry PI
 
-- use lighttpd web server, rrdtool, perl and python for rrdtool.
+### Use lighttpd web server, rrdtool, perl and python for rrdtool.
 
 - (sudo apt-get install librrds-perl lighttpd rrdtool python-rrdtool):
 
