@@ -1,0 +1,19 @@
+<html>
+<body>
+<h1>Temperature</h1>
+</body>
+
+<iframe marginwidth="0" marginheight="0" frameborder="0" width="1200" height="400" name="graph">
+</iframe>
+<form action="graph.pl" method="get" target="graph">
+  <fieldset>
+  <legend>Time</legend>
+  <input type="radio" name="type" value="day" checked="checked"/>Day
+  <input type="radio" name="type" value="week"/>Week
+  <input type="radio" name="type" value="month"/>Month
+  <input type="radio" name="type" value="year"/>Year
+  </fieldset>
+  <input type="submit" value="Show" />
+</form>
+
+</html>
