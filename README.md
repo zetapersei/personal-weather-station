@@ -7,7 +7,7 @@
 
 dtoverlay=w1-gpio
 
-### add in # /etc/modules:
+### add in /etc/modules:
 
 w1-gpio pullup=1
 
