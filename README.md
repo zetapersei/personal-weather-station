@@ -5,6 +5,7 @@
 add in # /etc/modules:
 
 w1-gpio pullup=1
+
 w1-therm
 
 ### Use lighttpd web server, rrdtool, perl and python for rrdtool:
