@@ -2,6 +2,11 @@
 # Raspberry PI
 ## Set of scripts for temperature acquisition with DS18B20 temperature sensors.
 ## For enable Wire-1 in RaspPI:
+
+add in /boot/config.txt:
+
+dtoverlay=w1-gpio
+
 add in # /etc/modules:
 
 w1-gpio pullup=1
