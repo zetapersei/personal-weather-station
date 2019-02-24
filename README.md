@@ -1,6 +1,6 @@
-# personal-weather-station
-
-## in Raspberry PI
+# Personal Weather Station
+# Raspberry PI
+- set of scripts for temperature acquisition with DS18B20 temperature sensors
 
 ### Use lighttpd web server, rrdtool, perl and python for rrdtool:
 
