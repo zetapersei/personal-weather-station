@@ -29,7 +29,7 @@ my @opts=("-v", "°C",
 RRDs::graph($tmpfile,
   @opts,
   "DEF:temp0=$rrd:temp0:AVERAGE",
-  "LINE2:temp0#0000FF:Inside"
+  "LINE2:temp0#00FF00:Inside"
    "DEF:hum0=$rrd_hum:hum0:AVERAGE",
   "LINE2:hum0#0000FF:Humidity"
 );
