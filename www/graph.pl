@@ -6,7 +6,8 @@ use RRDs;
 use strict;
 
 # path to database
-my $rrd='/home/pi/temperature.rrd';
+my $rrd='/home/pi/personal-weather-station/temperature.rrd';
+my $rrd_hum='/home/pi/personal-weather-station/humidity.rrd';
 
 # size
 my $width=1200;
@@ -29,6 +30,8 @@ RRDs::graph($tmpfile,
   @opts,
   "DEF:temp0=$rrd:temp0:AVERAGE",
   "LINE2:temp0#0000FF:Inside"
+   "DEF:hum0=$rrd_hum:hum0:AVERAGE",
+  "LINE2:hum0#0000FF:Humidity"
 );
 # check error
 my $err=RRDs::error;
