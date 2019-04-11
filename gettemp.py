@@ -1,10 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import re, os, rrdtool, time
+import re, os, rrdtool, time, Adafruit_DHT, MySQLdb
 
-# function: read and parse sensor data file
-def read_sensor(path):
+sensor = Adafruit_DHT.DHT11
+pin = 14
+
+humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+
+# function: read and parse sensor data file def read_sensor(path):
   value = "U"
   try:
     f = open(path, "r")
@@ -24,14 +28,29 @@ path = (
   "/sys/bus/w1/devices/28-0417c3a4e1ff/w1_slave"
 )
 
+# print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+
 # read sensor data
 data = 'N'
-#for path in path:
 data += ':'
 data += read_sensor(path)
 time.sleep(1)
 
 # insert data into round-robin-database
 rrdtool.update(
-  "/home/pi/temperature.rrd",
+  "/home/pi/personal-weather-station/temperature.rrd",
   data)
+# Connessione al Database
+db = MySQLdb.connect("localhost","pico","maurizio","weather" ) # Ottenimento del cursore cursor = db.cursor() sql = "INSERT INTO wr_temperature (sensor_id, value) VALUES(6, %.1f)" % float(read_sensor(path))
+
+try:
+   # Esecuzione della query SQL
+   cursor.execute(sql)
+   # Commit
+   db.commit()
+except:
+   # Rollback in caso di errore
+   db.rollback()
+
+# Disconnessione
+db.close()
