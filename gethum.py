@@ -15,19 +15,19 @@ rrdtool.update(
 data)
 # Connection Database Mysql
 db = MySQLdb.connect("localhost","user","passwd","weather") 
-# Ottenimento del cursore 
+# Optained cursor 
 cursor = db.cursor() 
 
 sql = "INSERT INTO wr_humidity (sensor_id, value) " "VALUES(6, %u)" % humidity
 
 try:
-   # Esecuzione della query SQL
+   # SQL query execution
    cursor.execute(sql)
    # Commit
    db.commit()
 except:
-# Rollback in caso di errore
+# Rollback if error
    db.rollback()
 
-# Disconnessione
+# Database disconnection
 db.close()
