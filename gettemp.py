@@ -40,17 +40,20 @@ time.sleep(1)
 rrdtool.update(
   "/home/pi/personal-weather-station/temperature.rrd",
   data)
-# Connessione al Database
-db = MySQLdb.connect("localhost","user","passwd","weather" ) # Ottenimento del cursore cursor = db.cursor() sql = "INSERT INTO wr_temperature (sensor_id, value) VALUES(6, %.1f)" % float(read_sensor(path))
+#  Database connection
+db = MySQLdb.connect("localhost","user","passwd","weather" ) 
+# Cursor optained
+cursor = db.cursor() 
+sql = "INSERT INTO wr_temperature (sensor_id, value) VALUES(6, %.1f)" % float(read_sensor(path))
 
 try:
-   # Esecuzione della query SQL
+   # Query execution
    cursor.execute(sql)
    # Commit
    db.commit()
 except:
-   # Rollback in caso di errore
+   # Rollback if error
    db.rollback()
 
-# Disconnessione
+# Database Disconnection
 db.close()
