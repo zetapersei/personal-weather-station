@@ -14,7 +14,7 @@ rrdtool.update(
   "/home/pi/personal-weather-station/humidity.rrd",
 data)
 # Connessione al Database
-db = MySQLdb.connect("localhost","pico","maurizio","weather" ) # Ottenimento del cursore cursor = db.cursor() sql = "INSERT INTO wr_humidity (sensor_id, value) " "VALUES(6, %u)" % humidity
+db = MySQLdb.connect("localhost","user","passwd","weather" ) # Ottenimento del cursore cursor = db.cursor() sql = "INSERT INTO wr_humidity (sensor_id, value) " "VALUES(6, %u)" % humidity
 
 try:
    # Esecuzione della query SQL
