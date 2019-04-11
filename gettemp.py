@@ -41,7 +41,7 @@ rrdtool.update(
   "/home/pi/personal-weather-station/temperature.rrd",
   data)
 # Connessione al Database
-db = MySQLdb.connect("localhost","pico","maurizio","weather" ) # Ottenimento del cursore cursor = db.cursor() sql = "INSERT INTO wr_temperature (sensor_id, value) VALUES(6, %.1f)" % float(read_sensor(path))
+db = MySQLdb.connect("localhost","user","passwd","weather" ) # Ottenimento del cursore cursor = db.cursor() sql = "INSERT INTO wr_temperature (sensor_id, value) VALUES(6, %.1f)" % float(read_sensor(path))
 
 try:
    # Esecuzione della query SQL
