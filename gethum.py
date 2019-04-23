@@ -3,7 +3,10 @@
 
 import re, os, rrdtool, time, Adafruit_DHT, MySQLdb
 
-humidity, temperature = Adafruit_DHT.read_retry(11, 14) print (humidity) # read sensor data data = 'N'
+humidity, temperature = Adafruit_DHT.read_retry(11, 14) 
+print (humidity) 
+
+# read sensor data data = 'N'
 
 data += ':'
 data += str(humidity)
