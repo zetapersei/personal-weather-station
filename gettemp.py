@@ -1,14 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import re, os, rrdtool, time, Adafruit_DHT, MySQLdb
+import re, os, rrdtool, time, MySQLdb
 
-sensor = Adafruit_DHT.DHT11
-pin = 14
+# function: read and parse sensor data file 
 
-humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-
-# function: read and parse sensor data file def read_sensor(path):
+def read_sensor(path):
   value = "U"
   try:
     f = open(path, "r")
