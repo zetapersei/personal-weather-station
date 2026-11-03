@@ -1,19 +1,40 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Personal Weather Station</title>
+</head>
 <body>
-<h1>Temperature</h1>
+  <h1>Personal Weather Station</h1>
+
+  <section>
+    <h2>Temperature</h2>
+    <iframe marginwidth="0" marginheight="0" frameborder="0" width="1200" height="400" name="temp_graph" src="graph_temp.pl?type=day"></iframe>
+    <form action="graph_temp.pl" method="get" target="temp_graph">
+      <fieldset>
+        <legend>Time range</legend>
+        <label><input type="radio" name="type" value="day" checked> Day</label>
+        <label><input type="radio" name="type" value="week"> Week</label>
+        <label><input type="radio" name="type" value="month"> Month</label>
+        <label><input type="radio" name="type" value="year"> Year</label>
+      </fieldset>
+      <input type="submit" value="Show">
+    </form>
+  </section>
+
+  <section>
+    <h2>Humidity</h2>
+    <iframe marginwidth="0" marginheight="0" frameborder="0" width="1200" height="400" name="hum_graph" src="graph_hum.pl?type=day"></iframe>
+    <form action="graph_hum.pl" method="get" target="hum_graph">
+      <fieldset>
+        <legend>Time range</legend>
+        <label><input type="radio" name="type" value="day" checked> Day</label>
+        <label><input type="radio" name="type" value="week"> Week</label>
+        <label><input type="radio" name="type" value="month"> Month</label>
+        <label><input type="radio" name="type" value="year"> Year</label>
+      </fieldset>
+      <input type="submit" value="Show">
+    </form>
+  </section>
 </body>
-
-<iframe marginwidth="0" marginheight="0" frameborder="0" width="1200" height="400" name="graph">
-</iframe>
-<form action="graph.pl" method="get" target="graph">
-  <fieldset>
-  <legend>Time</legend>
-  <input type="radio" name="type" value="day" checked="checked"/>Day
-  <input type="radio" name="type" value="week"/>Week
-  <input type="radio" name="type" value="month"/>Month
-  <input type="radio" name="type" value="year"/>Year
-  </fieldset>
-  <input type="submit" value="Show" />
-</form>
-
 </html>

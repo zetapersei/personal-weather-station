@@ -1,36 +1,82 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
-import re, os, rrdtool, time, Adafruit_DHT, MySQLdb
+import sys
+import time
+from pathlib import Path
 
-humidity, temperature = Adafruit_DHT.read_retry(11, 14) 
-print (humidity) 
-
-# read sensor data data = 'N'
-
-data += ':'
-data += str(humidity)
-time.sleep(1)
-
-# insert data into round-robin-database
-rrdtool.update(
-  "/home/pi/personal-weather-station/humidity.rrd",
-data)
-# Connection Database Mysql
-db = MySQLdb.connect("localhost","user","passwd","weather") 
-# Optained cursor 
-cursor = db.cursor() 
-
-sql = "INSERT INTO wr_humidity (sensor_id, value) " "VALUES(6, %u)" % humidity
+import rrdtool
 
 try:
-   # SQL query execution
-   cursor.execute(sql)
-   # Commit
-   db.commit()
-except:
-# Rollback if error
-   db.rollback()
+    import Adafruit_DHT
+except ModuleNotFoundError:  # pragma: no cover - optional dependency at runtime
+    Adafruit_DHT = None
 
-# Database disconnection
-db.close()
+try:
+    import MySQLdb
+except ModuleNotFoundError:  # pragma: no cover - optional dependency at runtime
+    MySQLdb = None
+
+SENSOR_PIN = 14
+SENSOR_TYPE = 11
+RRD_PATH = Path("/home/pi/personal-weather-station/humidity.rrd")
+DB_CONFIG = {
+    "host": "localhost",
+    "user": "user",
+    "passwd": "passwd",
+    "db": "weather",
+}
+
+
+def read_humidity():
+    if Adafruit_DHT is None:
+        print("Adafruit_DHT is not installed. Cannot read humidity sensor.", file=sys.stderr)
+        return None
+
+    humidity, _temperature = Adafruit_DHT.read_retry(SENSOR_TYPE, SENSOR_PIN)
+    if humidity is None:
+        print(f"{time.strftime('%x %X')} Failed to read humidity sensor.", file=sys.stderr)
+        return None
+    return float(humidity)
+
+
+def update_rrd(value):
+    try:
+        rrdtool.update(str(RRD_PATH), f"N:{value:.3f}")
+    except rrdtool.OperationalError as exc:
+        print(f"RRD update failed: {exc}", file=sys.stderr)
+        return False
+    return True
+
+
+def insert_database(value):
+    if MySQLdb is None:
+        print("MySQLdb is not installed. Skipping database insertion.", file=sys.stderr)
+        return False
+
+    try:
+        db = MySQLdb.connect(**DB_CONFIG)
+        cursor = db.cursor()
+        cursor.execute(
+            "INSERT INTO wr_humidity (sensor_id, value) VALUES (%s, %s)",
+            (6, round(float(value), 3)),
+        )
+        db.commit()
+        db.close()
+        return True
+    except MySQLdb.Error as exc:
+        print(f"Database insertion failed: {exc}", file=sys.stderr)
+        return False
+
+
+def main():
+    value = read_humidity()
+    if value is None:
+        return 1
+
+    update_rrd(value)
+    insert_database(value)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

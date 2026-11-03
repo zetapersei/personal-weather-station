@@ -1,0 +1,4 @@
+# Install these entries in the crontab of the user that owns the sensors and
+# RRD files (normally "pi"). They run both collection scripts every five minutes.
+*/5 * * * * /bin/bash -o pipefail -c '/usr/bin/python3 /home/pi/personal-weather-station/gettemp.py 2>&1 | /usr/bin/logger -t weather-station-temperature'
+*/5 * * * * /bin/bash -o pipefail -c '/usr/bin/python3 /home/pi/personal-weather-station/gethum.py 2>&1 | /usr/bin/logger -t weather-station-humidity'
